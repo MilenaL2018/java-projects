@@ -63,6 +63,8 @@ public class FileIO extends JFrame implements ActionListener {
                     out.close();
                 } catch (java.io.IOException e) {
                     logger.info("Cannot write to text.txt");
+                } finally {
+                    out.close();
                 }
                 // Read from file
                 try {

@@ -231,43 +231,14 @@ public class TaskScheduler extends TimerTask {
             } else {
                 raf.seek(0);
             }
+            
             while ((line = raf.readLine()) != null) {
-                ServerVariables serverVariables = new ServerVariables();
-                // use pipe as separator
-                String[] values = line.split(lineSplitBy);
-                if (values.length > 0) {
-                    serverVariables.setHttpReferer(values[0]);
-                }
-                if (values.length > 1) {
-                    serverVariables.setHttpUserAgent(values[1]);
-                }
-                if (values.length > 2) {
-                    serverVariables.setRemoteAddress(values[2]);
-                }
-                if (values.length > 3) {
-                    serverVariables.setRemoteHost(values[3]);
-                }
-                if (values.length > 4) {
-                    serverVariables.setRequestMethod(values[4]);
-                }
-                if (values.length > 5) {
-                    serverVariables.setServerName(values[5]);
-                }
-                if (values.length > 6) {
-                    serverVariables.setServerPort(values[6]);
-                }
-                if (values.length > 7) {
-                    serverVariables.setServerSoftware(values[7]);
-                }
-                logger.info("Call WS ");
-                logger.info(serverVariables.toString());
-                try {
-                    // WS Call
-                    this.sendPost(this.webServiceUrl, serverVariables);
+                try{
+                    readFile(file);
                 } catch (Exception e) {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
+
                 this.filePointer = raf.getFilePointer();
                 logger.info("Set Pointer " + raf.getFilePointer());
                 this.createTempFileForPointer(raf.getFilePointer());
